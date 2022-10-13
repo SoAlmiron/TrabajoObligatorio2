@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class EpicDoubleHashMap<K extends Number, V, T> extends HashMap{
+public class EpicDoubleHashMap<K extends Number, V, T> {
     private HashMap<K,V> mapOne;
     private HashMap<K,T> mapTwo;
 
@@ -20,12 +20,11 @@ public class EpicDoubleHashMap<K extends Number, V, T> extends HashMap{
         this.mapTwo = map1;
     }
 
-    public EpicDoubleHashMap(int initialCapacity, float loadFactor, HashMap<K, V> map, HashMap<K, T> map1) {
-        super(initialCapacity, loadFactor);
-        this.mapOne = map;
-        this.mapTwo = map1;
+    public EpicDoubleHashMap(HashMap<K, V> mapOne, HashMap<K, T> mapTwo) {
+        this.mapOne = mapOne;
+        this.mapTwo = mapTwo;
     }
-
+    
     public void addTwoType(K key, V value){
         mapOne.put(key,value);
     }
