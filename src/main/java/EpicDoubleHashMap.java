@@ -4,6 +4,11 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     private HashMap<K,V> mapOne;
     private HashMap<K,T> mapTwo;
 
+    public EpicDoubleHashMap() {
+        mapOne = new HashMap<>();
+        mapTwo = new HashMap<>();
+    }
+
     public HashMap<K, V> getFirstMap() {
         return mapOne;
     }
@@ -20,10 +25,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         this.mapTwo = map1;
     }
 
-    public EpicDoubleHashMap(HashMap<K, V> mapOne, HashMap<K, T> mapTwo) {
-        this.mapOne = mapOne;
-        this.mapTwo = mapTwo;
-    }
     
     public void addTwoType(K key, V value){
         mapOne.put(key,value);
