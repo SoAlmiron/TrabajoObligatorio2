@@ -1,42 +1,63 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EpicDoubleHashMap<K extends Number, V, T> extends HashMap{
-    private HashMap<K,V> mapOne;
-    private HashMap<K,T> mapTwo;
+public class EpicDoubleHashMap<K extends Number, V, T>{
 
-    public HashMap<K, V> getFirstMap() {
-        return mapOne;
+     HashMap<K, V> mapWithFirstValue;
+     HashMap<K, T> mapWithSecondValue;
+    ArrayList<Object> listMap;
+
+    public EpicDoubleHashMap() {
+        mapWithFirstValue = new HashMap<>();
+        mapWithSecondValue = new HashMap<>();
+        listMap = new ArrayList<>();
+
     }
 
-    public void setMapOne(HashMap<K, V> map) {
-        this.mapOne = map;
+    public HashMap<K, V> getMapWithFirstValue() {
+        return this.mapWithFirstValue;
     }
 
-    public HashMap<K, T> getMapTwo() {
-        return mapTwo;
+    public HashMap<K, T> getMapWithSecondValue() {
+        return this.mapWithSecondValue;
     }
 
-    public void setMapTwo(HashMap<K, T> map1) {
-        this.mapTwo = map1;
+    public void addItemWithFirstValue (K key, V value){
+        mapWithFirstValue.put(key, value);
     }
 
-    public EpicDoubleHashMap(int initialCapacity, float loadFactor, HashMap<K, V> map, HashMap<K, T> map1) {
-        super(initialCapacity, loadFactor);
-        this.mapOne = map;
-        this.mapTwo = map1;
+    public void addItemWithSecondValue (K key, T value){
+        mapWithSecondValue.put(key, value);
     }
 
-    public void addTwoType(K key, V value){
-        mapOne.put(key,value);
+    public void addItemWithTwoValues (K key, V value1, T value2){
+        mapWithFirstValue.put(key, value1);
+        mapWithSecondValue.put(key, value2);
+        listMap.add(key);
+        listMap.add(value1);
+        listMap.add(value2);
     }
 
-    public void addTwoTypes(K key,T value){
-        mapTwo.put(key,value);
+    public V getFirstValue(K key){
+        return mapWithFirstValue.get(key);
+    }
+    public T getSecondValue(K key){
+        return mapWithSecondValue.get(key);
+    }
+    public void removeItemByKey(K key){
+        if (mapWithFirstValue.containsKey(key)){
+            mapWithFirstValue.remove(key);
+        }
+        if (mapWithSecondValue.containsKey(key)){
+            mapWithSecondValue.remove(key);
+        }
     }
 
-    public void addThreeType(K key, V value, T value2){
-        mapOne.put(key,value);
-        mapTwo.put(key,value2);
+    @Override
+    public String toString() {
+        return "EpicDoubleHashMap= " +
+                 getMapWithFirstValue() +
+                 getMapWithSecondValue() +
+                listMap;
     }
-
 }
