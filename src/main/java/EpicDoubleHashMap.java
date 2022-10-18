@@ -26,12 +26,24 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     }
 
     
-    public void addItemWithFirstValue(K key, V value){
-        mapWithFirstValue.put(key,value);
+    public void addItemWithFirstValue(K key, V value) {
+        try{
+            if (mapWithFirstValue.containsKey(key)) {
+                throw new CheckExistingKey();
+            }
+        } catch (CheckExistingKey e){
+            mapWithFirstValue.put(key,value);
+        }
     }
 
-    public void addItemWithSecondValue(K key,T value){
+    public void addItemWithSecondValue(K key,T value) {
+        try {
+            if (mapWithSecondValue.containsKey(key)) {
+                throw new CheckExistingKey();
+            }
+        } catch (CheckExistingKey e){
         mapWithSecondValue.put(key,value);
+        }
     }
 
     public void addItemWithTwoValues(K key, V value1, T value2){
@@ -39,12 +51,24 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         mapWithSecondValue.put(key,value2);
     }
 
-    public V getFirstValue(K key){
-        return mapWithFirstValue.get(key);
+    public void getFirstValue(K key) {
+        try {
+            if (mapWithFirstValue.get(key)==null){
+                throw new CheckNullValue();
+            }
+        }catch (CheckNullValue e) {
+            mapWithFirstValue.get(key);
+        }
     }
 
-    public T getSecondValue(K key){
-        return mapWithSecondValue.get(key);
+    public void getSecondValue(K key) {
+        try {
+            if (mapWithSecondValue.get(key) == null) {
+                throw new CheckNullValue();
+            }
+        }catch (CheckNullValue e) {
+            mapWithSecondValue.get(key);
+        }
     }
 
     public String getTwoValues(K key) {
@@ -52,11 +76,16 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
                 + mapWithSecondValue.get(key) + "}";
     }
 
-    public void removeItemByKey(K key){
-        if (mapWithFirstValue.containsKey(key)){
+    public void removeItemByKey(K key) {
+        try {
+            if (!(mapWithFirstValue.containsKey(key))) {
+                throw new CheckNullKey();
+            }
+            if (!(mapWithSecondValue.containsKey(key))) {
+                throw new CheckNullKey();
+            }
+        }catch (CheckNullKey e) {
             mapWithFirstValue.remove(key);
-        }
-        if (mapWithSecondValue.containsKey(key)){
             mapWithSecondValue.remove(key);
         }
     }

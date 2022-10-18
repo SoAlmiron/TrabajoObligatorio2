@@ -2,6 +2,7 @@ public class Main {
     public static void main(String[] args){
 
         EpicDoubleHashMap<Integer, String, Integer> item = new EpicDoubleHashMap<>();
+
         item.addItemWithFirstValue(2, "Sofia");
         item.addItemWithSecondValue(3,5050);
         item.addItemWithTwoValues(1, "Tomás", 4545);
