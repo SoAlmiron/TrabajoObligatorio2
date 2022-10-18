@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Map;
 
 public class EpicDoubleHashMap<K extends Number, V, T> {
     private HashMap<K,V> mapWithFirstValue;
@@ -40,6 +39,19 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         mapWithSecondValue.put(key,value2);
     }
 
+    public V getFirstValue(K key){
+        return mapWithFirstValue.get(key);
+    }
+
+    public T getSecondValue(K key){
+        return mapWithSecondValue.get(key);
+    }
+
+    public String getTwoValues(K key) {
+        return "{" + key + "= " + mapWithFirstValue.get(key) + ", "
+                + mapWithSecondValue.get(key) + "}";
+    }
+
     public void removeItemByKey(K key){
         if (mapWithFirstValue.containsKey(key)){
             mapWithFirstValue.remove(key);
@@ -49,8 +61,4 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         }
     }
 
-    public String toString(K key) {
-        return key + "= " + mapWithFirstValue.get(key) + ", "
-                + mapWithSecondValue.get(key);
-    }
 }
