@@ -1,42 +1,56 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class EpicDoubleHashMap<K extends Number, V, T> {
-    private HashMap<K,V> mapOne;
-    private HashMap<K,T> mapTwo;
+    private HashMap<K,V> mapWithFirstValue;
+    private HashMap<K,T> mapWithSecondValue;
 
     public EpicDoubleHashMap() {
-        mapOne = new HashMap<>();
-        mapTwo = new HashMap<>();
+        mapWithFirstValue = new HashMap<>();
+        mapWithSecondValue = new HashMap<>();
     }
 
-    public HashMap<K, V> getFirstMap() {
-        return mapOne;
+    public HashMap<K, V> getMapWithFirstValue() {
+        return mapWithFirstValue;
     }
 
-    public void setMapOne(HashMap<K, V> map) {
-        this.mapOne = map;
+    public void setMapWithFirstValue(HashMap<K, V> map) {
+        this.mapWithFirstValue = map;
     }
 
-    public HashMap<K, T> getMapTwo() {
-        return mapTwo;
+    public HashMap<K, T> getMapWithSecondValue() {
+        return mapWithSecondValue;
     }
 
-    public void setMapTwo(HashMap<K, T> map1) {
-        this.mapTwo = map1;
+    public void setMapWithSecondValue(HashMap<K, T> map1) {
+        this.mapWithSecondValue = map1;
     }
 
     
-    public void addTwoType(K key, V value){
-        mapOne.put(key,value);
+    public void addItemWithFirstValue(K key, V value){
+        mapWithFirstValue.put(key,value);
     }
 
-    public void addTwoTypes(K key,T value){
-        mapTwo.put(key,value);
+    public void addItemWithSecondValue(K key,T value){
+        mapWithSecondValue.put(key,value);
     }
 
-    public void addThreeType(K key, V value, T value2){
-        mapOne.put(key,value);
-        mapTwo.put(key,value2);
+    public void addItemWithTwoValues(K key, V value1, T value2){
+        mapWithFirstValue.put(key,value1);
+        mapWithSecondValue.put(key,value2);
     }
 
+    public void removeItemByKey(K key){
+        if (mapWithFirstValue.containsKey(key)){
+            mapWithFirstValue.remove(key);
+        }
+        if (mapWithSecondValue.containsKey(key)){
+            mapWithSecondValue.remove(key);
+        }
+    }
+
+    public String toString(K key) {
+        return key + "= " + mapWithFirstValue.get(key) + ", "
+                + mapWithSecondValue.get(key);
+    }
 }
