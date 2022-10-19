@@ -1,60 +1,41 @@
+import Classes.Dog;
+import Classes.Person;
 import CustomExceptions.CheckExistingKeyException;
 import CustomExceptions.CheckNullKeyException;
 import CustomExceptions.CheckNullValueException;
 import CustomExceptions.CheckThreeSameValuesException;
+import Utilities.EpicDoubleHashMap;
 
-public class Main{
-    public static void main(String[] args) throws CheckNullValueException {
+public class Main {
+    public static void main(String[] args) {
+        EpicDoubleHashMap<Integer, Person, Dog> mapOfTwoDogs = new EpicDoubleHashMap<>();
+        Person firstPerson = new Person("Pepe");
+        Dog firstDog = new Dog("Tobi", 10);
+        Dog secondDog = new Dog("Tobi", 10);
+        Dog thirdDog = new Dog("Tobi", 10);
+        Dog fourthDog = new Dog("Tobi", 12);
 
-        EpicDoubleHashMap<Integer, String, Integer> item = new EpicDoubleHashMap<>();
 
-        // ADD method
+
         try {
-            // ????????????????????????
-            item.addItemWithFirstValue(1, "Sofia");
-            item.addItemWithFirstValue(2, "Sofi");
-            item.addItemWithFirstValue(3, "Sofi");
-            item.addItemWithFirstValue(4, "Sofi");
-            // Example Exception c) item.addItemWithFirstValue(4, "Sofi");
+            mapOfTwoDogs.addItemWithTwoValues(1, firstPerson, firstDog);
+            mapOfTwoDogs.addItemWithTwoValues(2, firstPerson, secondDog);
+            mapOfTwoDogs.addItemWithTwoValues(3, firstPerson, thirdDog);
 
-            item.addItemWithSecondValue(10,5050);
-            item.addItemWithSecondValue(20,5050);
-            item.addItemWithSecondValue(30,5050);
+            mapOfTwoDogs.removeItemByKey(2);
 
-            item.addItemWithTwoValues(100, "Tomás", 4545);
-            item.addItemWithTwoValues(200, "Tomás", 4545);
-            item.addItemWithTwoValues(300, "Tomás", 4545);
-
-        } catch (CheckExistingKeyException | CheckThreeSameValuesException  er) {
-            throw new RuntimeException(er);
-        }
-
-        // GET method
-        try {
-            System.out.println(item.getFirstValue(1));
-            System.out.println(item.getSecondValue(10));
-            System.out.println(item.getTwoValues(100));
-            //Example Exception b) System.out.println(item.getFirstValue(8));
-        } catch (CheckNullValueException e) {
+            System.out.println(mapOfTwoDogs.getTwoValues(3));
+            //mapOfTwoDogs.getFirstValue(5);
+            //mapOfTwoDogs.addItemWithSecondValue(5, fourthDog);
+        } catch (CheckExistingKeyException | CheckThreeSameValuesException | CheckNullValueException |
+                 CheckNullKeyException e) {
             throw new RuntimeException(e);
         }
-
-        // Remove method
-        try {
-            item.removeItemByKey(1);
-            //Example Exception b) item.removeItemByKey(8);
-        } catch (CheckNullKeyException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println(item.getTwoValues(100));
 
         // AUX Methods
-        System.out.println(item.mostValues());
-        System.out.println(item.timesValuesRepeat(4));
-        System.out.println("There are values repeated? " +item.areValuesReapeated);
+        System.out.println(mapOfTwoDogs.mostValues());
+        System.out.println(mapOfTwoDogs.timesValuesRepeat(1));
+        System.out.println("There are values repeated? " +mapOfTwoDogs.valuesRepeated());
 
     }
 }
-
-

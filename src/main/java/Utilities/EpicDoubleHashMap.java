@@ -1,9 +1,9 @@
+package Utilities;
+
 import CustomExceptions.CheckNullKeyException;
 import CustomExceptions.CheckExistingKeyException;
 import CustomExceptions.CheckNullValueException;
 import CustomExceptions.CheckThreeSameValuesException;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class EpicDoubleHashMap<K extends Number, V, T> {
@@ -72,6 +72,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     public String getTwoValues(K key) throws CheckNullValueException {
         return "" + getFirstValue(key) + ", " + getSecondValue(key) + "";
     }
+
 
     public void removeItemByKey(K key) throws CheckNullKeyException {
         if ((mapWithFirstValue.containsKey(key)) || (mapWithSecondValue.containsKey(key))){
@@ -146,7 +147,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         int counterValueRepeat = 0;
         V valueToCheckTypeV = mapWithFirstValue.get(keyCheck);
         T valueToCheckTypeT = mapWithSecondValue.get(keyCheck);
-        //????????????????????????
         for ( K key : mapWithFirstValue.keySet()) {
             if (mapWithFirstValue.get(key).equals(valueToCheckTypeV)){
                 counterValueRepeat ++;
@@ -158,6 +158,11 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             }
         }
 
+        if(counterVValues > 0 && counterTValues == 0){
+            counterValueRepeat = counterVValues;
+        }else{
+            counterValueRepeat = counterTValues;
+        }
         return "The value for the key " + keyCheck + " repeats " + counterValueRepeat + " times.";
     }
 
