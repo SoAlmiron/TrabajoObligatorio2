@@ -26,26 +26,32 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         return mapWithSecondValue;
     }
 
-    public void addItemWithFirstValue(K key, V value) throws CheckExistingKeyException, CheckThreeSameValuesException {
-        if (mapWithFirstValue.containsKey(key)) {
+
+    //ADD Items
+    public void addItemWithFirstValue(K key, V value) throws CheckExistingKeyException, CheckThreeSameValuesException, CheckNullValueException {
+        if (mapWithFirstValue.containsKey(key) || mapWithSecondValue.containsKey(key)) {
             throw new CheckExistingKeyException();
         }
-        checkValuesMapWithFirstValue(value);
+        if (threeSameValues(value)){
+            throw  new CheckThreeSameValuesException();
+        }
         mapWithFirstValue.put(key,value);
         counterVValues ++;
     }
 
     public void addItemWithSecondValue(K key,T value)  throws CheckExistingKeyException, CheckThreeSameValuesException {
-        if (mapWithSecondValue.containsKey(key)) {
+        if (mapWithSecondValue.containsKey(key) || mapWithFirstValue.containsKey(key)) {
             throw new CheckExistingKeyException();
         }
-        checkValuesMapWithSecondValue(value);
+        if (threeSameValues(value)){
+            throw  new CheckThreeSameValuesException();
+        }
         mapWithSecondValue.put(key,value);
         counterTValues ++;
     }
 
     public void addItemWithTwoValues(K key, V value1, T value2) throws CheckExistingKeyException, CheckThreeSameValuesException {
-        if (mapWithSecondValue.containsKey(key)) {
+        if (mapWithSecondValue.containsKey(key) || mapWithFirstValue.containsKey(key)) {
             throw new CheckExistingKeyException();
         }
         checkValuesMapWithTwoValues(value1, value2);
@@ -53,62 +59,24 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         mapWithSecondValue.put(key,value2);
     }
 
-    public V getFirstValue(K key) throws CheckNullValueException {
-        if (mapWithFirstValue.get(key) == null) {
-            throw new CheckNullValueException();
-        } else{
-            return mapWithFirstValue.get(key);
-        }
-    }
-
-    public T getSecondValue(K key) throws CheckNullValueException {
-        if (mapWithSecondValue.get(key) == null) {
-            throw new CheckNullValueException();
-        } else{
-            return mapWithSecondValue.get(key);
-        }
-    }
-
-    public String getTwoValues(K key) throws CheckNullValueException {
-        return "" + getFirstValue(key) + ", " + getSecondValue(key) + "";
-    }
-
-
-    public void removeItemByKey(K key) throws CheckNullKeyException {
-        if ((mapWithFirstValue.containsKey(key)) || (mapWithSecondValue.containsKey(key))){
-            mapWithFirstValue.remove(key);
-            mapWithSecondValue.remove(key);
-        }else {
-            throw new CheckNullKeyException();
-        }
-    }
-
-    public void checkValuesMapWithFirstValue(V value) throws CheckThreeSameValuesException{
-        int counter = 0;
-        for ( K key : mapWithFirstValue.keySet()) {
-            if (mapWithFirstValue.get(key).equals(value)){
-                counter++;
+    //Checking Three Times repetition
+    public boolean threeSameValues(Object value){
+        int counterV = 0;
+        int counterT = 0;
+        for (Map.Entry<K, V> entry : mapWithFirstValue.entrySet()) {
+            if (value.equals(entry.getValue())){
+                counterV +=1;
                 areValuesReapeated = true;
             }
         }
-        if (counter >= 3){
-            throw  new CheckThreeSameValuesException();
+        for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                counterT += 1;
+                areValuesReapeated = true;
+            }
         }
+        return counterV >= 2 && counterT >= 2;
     }
-
-    public void checkValuesMapWithSecondValue(T value) throws CheckThreeSameValuesException{
-        int counter = 0;
-       for ( K key : mapWithSecondValue.keySet()) {
-           if (mapWithSecondValue.get(key).equals(value)){
-               counter++;
-               areValuesReapeated = true;
-           }
-       }
-       if (counter == 3){
-           throw  new CheckThreeSameValuesException();
-       }
-   }
-
     public void checkValuesMapWithTwoValues(V value1, T value2) throws CheckThreeSameValuesException{
         int counterFirstValue = 0;
         int counterSecondValue = 0;
@@ -125,11 +93,41 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
                 counterSecondValue++;
             }
         }
-        if (counterFirstValue >= 3 && counterSecondValue >= 3){ counterThreeRepeatValue = true;}
+        if (counterFirstValue >= 2 && counterSecondValue >= 2){ counterThreeRepeatValue = true;}
         if (counterThreeRepeatValue) {
             throw new CheckThreeSameValuesException();
         }
     }
+
+    //GET Values
+    public V getFirstValue(K key) throws CheckNullValueException {
+        if (mapWithFirstValue.get(key) == null) {
+            throw new CheckNullValueException();
+        } else{
+            return mapWithFirstValue.get(key);
+        }
+    }
+    public T getSecondValue(K key) throws CheckNullValueException {
+        if (mapWithSecondValue.get(key) == null) {
+            throw new CheckNullValueException();
+        } else{
+            return mapWithSecondValue.get(key);
+        }
+    }
+    public String getTwoValues(K key) throws CheckNullValueException {
+        return "" + getFirstValue(key) + ", " + getSecondValue(key) + "";
+    }
+
+    //REMOVE item by Key
+    public void removeItemByKey(K key) throws CheckNullKeyException {
+        if ((mapWithFirstValue.containsKey(key)) || (mapWithSecondValue.containsKey(key))){
+            mapWithFirstValue.remove(key);
+            mapWithSecondValue.remove(key);
+        }else {
+            throw new CheckNullKeyException();
+        }
+    }
+
 
     //AUXILIAR METHODS
     public String mostValues(){
