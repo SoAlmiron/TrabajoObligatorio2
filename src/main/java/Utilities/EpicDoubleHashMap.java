@@ -23,7 +23,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     }
 
     //ADD Items
-    public void addItemWithFirstValue(K key, V value) throws CheckExistingKeyException, CheckThreeSameValuesException, CheckNullValueException {
+    public void addItemWithFirstValue(K key, V value) throws CheckExistingKeyException, CheckThreeSameValuesException {
         if (mapWithFirstValue.containsKey(key) || mapWithSecondValue.containsKey(key)) {
             throw new CheckExistingKeyException();
         }
@@ -58,13 +58,13 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         int counterT = 0;
         for (Map.Entry<K, V> entry : mapWithFirstValue.entrySet()) {
             if (value.equals(entry.getValue())){
-                counterV +=1;
+                counterV++;
                 areValuesReapeated = true;
             }
         }
         for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
             if (value.equals(entry.getValue())) {
-                counterT += 1;
+                counterT++;
                 areValuesReapeated = true;
             }
         }
@@ -76,7 +76,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             for (Map.Entry<K, V> entry : mapWithFirstValue.entrySet()) {
                 if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(value)
                         && entry.getValue().equals(value)) {
-                    counter += 1;
+                    counter++;
                 }
             }
         }
@@ -89,8 +89,8 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         for (Map.Entry<K, T> map : mapWithSecondValue.entrySet()) {
             for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
                 if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(value)
-                && !entry.getValue().equals(value)){
-                    counter += 1;
+                && entry.getValue().equals(value)){
+                    counter++;
                 }
             }
         }
@@ -146,7 +146,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             return "There is the same amount between V and T values.";
         }
     }
-
     public String timesValuesRepeat(K keyCheck) throws CheckNullValueException {
         int counterVValues = 0;
         int counterTValues = 0;
@@ -156,12 +155,12 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         } else {
             for (K key : mapWithFirstValue.keySet()) {
                 if (mapWithFirstValue.get(key).equals(mapWithFirstValue.get(keyCheck))) {
-                    counterVValues +=1 ;
+                    counterVValues++;
                 }
             }
             for (K key : mapWithSecondValue.keySet()) {
                 if (mapWithSecondValue.get(key).equals(mapWithSecondValue.get(keyCheck))) {
-                    counterTValues += 1;
+                    counterTValues++;
                 }
             }
 

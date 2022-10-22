@@ -29,8 +29,9 @@ public class Main {
         mapOfTwoDogs.addItemWithFirstValue(32, fourthPerson);
         // throws exception Three times. mapOfTwoDogs.addItemWithFirstValue(13, secondPerson);
 
-        mapOfTwoDogs.addItemWithSecondValue(111,secondDog);
+        mapOfTwoDogs.addItemWithSecondValue(111, secondDog);
         mapOfTwoDogs.addItemWithSecondValue(222,fourthDog);
+        mapOfTwoDogs.addItemWithSecondValue(48, fourthDog);
         // throws exception Three times. mapOfTwoDogs.addItemWithSecondValue(333,fourthDog);
 
         mapOfTwoDogs.removeItemByKey(111);
@@ -40,8 +41,9 @@ public class Main {
         System.out.println(mapOfTwoDogs.mostValues());
         System.out.println(mapOfTwoDogs.timesValuesRepeat(1));
         System.out.println(mapOfTwoDogs.timesValuesRepeat(222));
-        System.out.println(mapOfTwoDogs.getFirstValue(1));
+        System.out.println(mapOfTwoDogs.getFirstValue(11));
         System.out.println(mapOfTwoDogs.getSecondValue(2));
+        System.out.println(mapOfTwoDogs.getTwoValues(1));
         // throws exception This key don´t have values. System.out.println(mapOfTwoDogs.timesValuesRepeat(87));
         System.out.println("There are values repeated? " + mapOfTwoDogs.valuesRepeated());
     }
