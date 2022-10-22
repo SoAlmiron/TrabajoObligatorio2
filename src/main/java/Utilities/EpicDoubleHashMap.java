@@ -4,6 +4,8 @@ import CustomExceptions.CheckNullKeyException;
 import CustomExceptions.CheckExistingKeyException;
 import CustomExceptions.CheckNullValueException;
 import CustomExceptions.CheckThreeSameValuesException;
+
+import java.io.FileReader;
 import java.util.*;
 
 public class EpicDoubleHashMap<K extends Number, V, T> {
@@ -88,10 +90,10 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         for ( K key : mapWithFirstValue.keySet()) {
             if (mapWithFirstValue.get(key).equals(value)){
                 counter++;
-                areValuesReapeated = true;
+
             }
         }
-        if (counter >= 3){
+        if (counter >= 2){
             throw  new CheckThreeSameValuesException();
         }
     }
@@ -101,10 +103,10 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
        for ( K key : mapWithSecondValue.keySet()) {
            if (mapWithSecondValue.get(key).equals(value)){
                counter++;
-               areValuesReapeated = true;
+
            }
        }
-       if (counter == 3){
+       if (counter >= 2){
            throw  new CheckThreeSameValuesException();
        }
    }
@@ -144,32 +146,33 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     }
 
     public String timesValuesRepeat(K keyCheck){
-        int counterValueRepeat = 0;
+        int counterValue1Repeat = 0 ;
+        int counterValue2Repeat = 0;
         V valueToCheckTypeV = mapWithFirstValue.get(keyCheck);
         T valueToCheckTypeT = mapWithSecondValue.get(keyCheck);
         for ( K key : mapWithFirstValue.keySet()) {
             if (mapWithFirstValue.get(key).equals(valueToCheckTypeV)){
-                counterValueRepeat ++;
+                counterValue1Repeat ++;
+                areValuesReapeated = true;
             }
         }
         for ( K key : mapWithSecondValue.keySet()) {
             if (mapWithSecondValue.get(key).equals(valueToCheckTypeT)){
-                counterValueRepeat ++;
+                counterValue2Repeat ++;
+                areValuesReapeated = true;
             }
         }
 
-        if(counterVValues > 0 && counterTValues == 0){
-            counterValueRepeat = counterVValues;
-        }else{
-            counterValueRepeat = counterTValues;
-        }
-        return "The value for the key " + keyCheck + " repeats " + counterValueRepeat + " times.";
+        return "The value for the key " + keyCheck + " repeats: value1: " +
+                counterValue1Repeat + " value2: " + counterValue2Repeat;
     }
 
     public boolean valuesRepeated(){
-        if (areValuesReapeated){
+        if (areValuesReapeated) {
             return true;
-        } return false;
+        } else {
+            return false;
+        }
     }
 
 
