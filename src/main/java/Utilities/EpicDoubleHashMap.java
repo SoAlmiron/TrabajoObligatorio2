@@ -15,14 +15,12 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         mapWithFirstValue = new HashMap<>();
         mapWithSecondValue = new HashMap<>();
     }
-
     public HashMap<K, V> getMapWithFirstValue() {
         return mapWithFirstValue;
     }
     public HashMap<K, T> getMapWithSecondValue() {
         return mapWithSecondValue;
     }
-
 
     //ADD Items
     public void addItemWithFirstValue(K key, V value) throws CheckExistingKeyException, CheckThreeSameValuesException, CheckNullValueException {
@@ -35,7 +33,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         //checkValuesMapWithFirstValue(value);
         mapWithFirstValue.put(key,value);
     }
-
     public void addItemWithSecondValue(K key,T value)  throws CheckExistingKeyException, CheckThreeSameValuesException {
         if (mapWithSecondValue.containsKey(key) || mapWithFirstValue.containsKey(key)) {
             throw new CheckExistingKeyException();
@@ -46,7 +43,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
        //checkValuesMapWithSecondValue(value);
         mapWithSecondValue.put(key,value);
     }
-
     public void addItemWithTwoValues(K key, V value1, T value2) throws CheckExistingKeyException, CheckThreeSameValuesException {
         if (mapWithSecondValue.containsKey(key) || mapWithFirstValue.containsKey(key)) {
             throw new CheckExistingKeyException();
@@ -74,7 +70,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         }
         return counterV >= 2 && counterT >= 2;
     }
-
     public boolean checkValuesMapWithFirstValue(V value) throws CheckThreeSameValuesException {
         int counter = 0;
         for (Map.Entry<K, V> map : mapWithFirstValue.entrySet()) {
@@ -88,7 +83,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             throw new CheckThreeSameValuesException();
         } else return false;
     }
-
     public boolean checkValuesMapWithSecondValue(T value) throws CheckThreeSameValuesException{
         int counter = 0;
         for (Map.Entry<K, T> map : mapWithSecondValue.entrySet()) {
@@ -103,7 +97,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         }
         else return false;
     }
-
     public void checkValuesMapWithTwoValues(V value1, T value2) throws CheckThreeSameValuesException{
         if (checkValuesMapWithFirstValue(value1) && checkValuesMapWithSecondValue(value2)){
             throw new CheckThreeSameValuesException();
@@ -151,7 +144,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             return "There is the same amount between V and T values.";
         }
     }
-
     public String timesValuesRepeat(K keyCheck){
         int counterVValues = 0;
         int counterTValues = 0;
@@ -172,7 +164,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         }else{
             return "The values for the key " + keyCheck + " repeats " + counterTValues + " times.";
         }
-
     }
 
     public boolean valuesRepeated(){
@@ -180,10 +171,5 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             return true;
         } else  return false;
     }
-
-
-
-
-
 
 }
