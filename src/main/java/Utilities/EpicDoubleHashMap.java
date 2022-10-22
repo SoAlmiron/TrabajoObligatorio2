@@ -30,7 +30,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         if (threeSameValues(value)){
             throw  new CheckThreeSameValuesException();
         }
-        //checkValuesMapWithFirstValue(value);
+        checkValuesMapWithFirstValue(value);
         mapWithFirstValue.put(key,value);
     }
     public void addItemWithSecondValue(K key,T value)  throws CheckExistingKeyException, CheckThreeSameValuesException {
@@ -40,7 +40,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         if (threeSameValues(value)){
             throw  new CheckThreeSameValuesException();
         }
-       //checkValuesMapWithSecondValue(value);
+        checkValuesMapWithSecondValue(value);
         mapWithSecondValue.put(key,value);
     }
     public void addItemWithTwoValues(K key, V value1, T value2) throws CheckExistingKeyException, CheckThreeSameValuesException {
@@ -74,7 +74,8 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         int counter = 0;
         for (Map.Entry<K, V> map : mapWithFirstValue.entrySet()) {
             for (Map.Entry<K, V> entry : mapWithFirstValue.entrySet()) {
-                if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(entry.getValue())) {
+                if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(value)
+                        && entry.getValue().equals(value)) {
                     counter += 1;
                 }
             }
@@ -87,7 +88,8 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         int counter = 0;
         for (Map.Entry<K, T> map : mapWithSecondValue.entrySet()) {
             for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
-                if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(entry.getValue())){
+                if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(value)
+                && !entry.getValue().equals(value)){
                     counter += 1;
                 }
             }
@@ -144,25 +146,31 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             return "There is the same amount between V and T values.";
         }
     }
-    public String timesValuesRepeat(K keyCheck){
+
+    public String timesValuesRepeat(K keyCheck) throws CheckNullValueException {
         int counterVValues = 0;
         int counterTValues = 0;
 
-        for ( K key : mapWithFirstValue.keySet()) {
-            if (mapWithFirstValue.get(key).equals(mapWithFirstValue.get(keyCheck))){
-                counterVValues ++;
+        if (mapWithSecondValue.get(keyCheck) == null) {
+            throw new CheckNullValueException();
+        } else {
+            for (K key : mapWithFirstValue.keySet()) {
+                if (mapWithFirstValue.get(key).equals(mapWithFirstValue.get(keyCheck))) {
+                    counterVValues +=1 ;
+                }
             }
-        }
-        for ( K key : mapWithSecondValue.keySet()) {
-            if (mapWithSecondValue.get(key).equals(mapWithSecondValue.get(keyCheck))){
-                counterTValues ++;
+            for (K key : mapWithSecondValue.keySet()) {
+                if (mapWithSecondValue.get(key).equals(mapWithSecondValue.get(keyCheck))) {
+                    counterTValues += 1;
+                }
             }
-        }
 
-        if(counterVValues > 0 && counterTValues == 0){
-            return "The values for the key " + keyCheck + " repeats " + counterVValues + " times.";
-        }else{
-            return "The values for the key " + keyCheck + " repeats " + counterTValues + " times.";
+            if (counterVValues > 0 && counterTValues == 0) {
+                return "The first value for the key " + keyCheck + " repeats " + counterVValues + " times.";
+            } else if (counterTValues > 0 && counterVValues == 0) {
+                return "The second value for the key " + keyCheck + " repeats " + counterTValues + " times.";
+            } else
+                return "The values for the key " + keyCheck + " repeats V= " + counterVValues + " T= " + counterTValues + " times.";
         }
     }
 
@@ -171,5 +179,4 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
             return true;
         } else  return false;
     }
-
 }
