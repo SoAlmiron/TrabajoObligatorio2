@@ -9,17 +9,11 @@ import java.util.*;
 public class EpicDoubleHashMap<K extends Number, V, T> {
     private HashMap<K,V> mapWithFirstValue;
     private HashMap<K,T> mapWithSecondValue;
-    boolean areValuesReapeated = false;
+    boolean areValuesRepeated = false;
 
     public EpicDoubleHashMap() {
         mapWithFirstValue = new HashMap<>();
         mapWithSecondValue = new HashMap<>();
-    }
-    public HashMap<K, V> getMapWithFirstValue() {
-        return mapWithFirstValue;
-    }
-    public HashMap<K, T> getMapWithSecondValue() {
-        return mapWithSecondValue;
     }
 
     //ADD Items
@@ -56,17 +50,19 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     public boolean threeSameValues(Object value){
         int counterV = 0;
         int counterT = 0;
+
         for (Map.Entry<K, V> entry : mapWithFirstValue.entrySet()) {
             if (value.equals(entry.getValue())){
                 counterV++;
-                areValuesReapeated = true;
             }
         }
         for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
             if (value.equals(entry.getValue())) {
                 counterT++;
-                areValuesReapeated = true;
             }
+        }
+        if (counterT > 0 || counterV > 0){
+            areValuesRepeated = true;
         }
         return counterV >= 2 && counterT >= 2;
     }
@@ -89,7 +85,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         for (Map.Entry<K, T> map : mapWithSecondValue.entrySet()) {
             for (Map.Entry<K, T> entry : mapWithSecondValue.entrySet()) {
                 if (!map.getKey().equals(entry.getKey()) && map.getValue().equals(value)
-                && entry.getValue().equals(value)){
+                        && entry.getValue().equals(value)){
                     counter++;
                 }
             }
@@ -136,7 +132,7 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
         }
     }
 
-    //AUXILIAR METHODS
+    //AUXILIARY METHODS
     public String mostValues(){
         if(mapWithFirstValue.size() > mapWithSecondValue.size()){
             return "There are more V values than T values.";
@@ -174,8 +170,6 @@ public class EpicDoubleHashMap<K extends Number, V, T> {
     }
 
     public boolean valuesRepeated(){
-        if (areValuesReapeated){
-            return true;
-        } else  return false;
+        return areValuesRepeated;
     }
 }
